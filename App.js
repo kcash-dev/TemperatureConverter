@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Converter } from './src/components/Converter';
+import { colors } from './src/utils/Colors';
 
 
 export default function App() {
@@ -21,15 +22,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    marginTop: 15
+    marginTop: 15,
+    backgroundColor: colors.black
   },
   title: {
     alignSelf: 'center',
     fontSize: 30,
     fontWeight: 'bold',
-    marginTop: 30
+    marginTop: 30,
+    color: colors.white
   },
   outerContainer: {
-    flex: 1
+    flex: 1,
+    backgroundColor: colors.black
   }
 });

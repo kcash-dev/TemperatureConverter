@@ -9,12 +9,12 @@ import {
 import RNPickerSelect from 'react-native-picker-select';
 
 import { ButtonComp } from '../components/Button'
+import { colors } from '../utils/Colors';
 
 
 export const Converter = () => {
-  const [ degrees, setDegrees ] = useState(0);
+  const [ degrees, setDegrees ] = useState(null);
   const [ unit, setUnit ] = useState('');
-  const [ result, setResult ] = useState(0);
   const [ fahrenheit, setFahrenheit ] = useState(0);
   const [ celsius, setCelsius ] = useState(0);
   const [ kelvin, setKelvin ] = useState(0);
@@ -25,16 +25,16 @@ export const Converter = () => {
       setCelsius(degrees)
       let fahrNum = degrees * 1.8 + 32
       let finalFahr = fahrNum.toFixed(1);
-      let kelNum = degrees + 273.15
-      let finalKel = kelNum.toFixed(2)
-      setKelvin(finalKel)
+      console.log(degrees)
+      let kelNum = parseFloat(degrees) + 273.15
+      setKelvin(kelNum)
       setFahrenheit(finalFahr);
     } else if (unit === 'Fahrenheit') {
       setFahrenheit(degrees)
       let celNum = 5/9 * (degrees - 32)
       let finalCel = celNum.toFixed(1)
       setCelsius(finalCel);
-      let kelNum = finalCel + 273.15
+      let kelNum = parseFloat(celNum) + 273.15
       let finalKel = kelNum.toFixed(2)
       setKelvin(finalKel)
     }
@@ -44,7 +44,7 @@ export const Converter = () => {
     <View>
       <View style={ styles.container }>
         <View style={ styles.innerContainer }>
-          <Text>Degrees</Text>
+          <Text style={ styles.label }>Degrees</Text>
           <TextInput
             value={ degrees }
             onChangeText={ setDegrees }
@@ -55,7 +55,7 @@ export const Converter = () => {
           />
         </View>
         <View style={ styles.innerContainer }>
-          <Text>Unit</Text>
+          <Text style={ styles.label }>Unit</Text>
           <RNPickerSelect
               onValueChange={(value) => setUnit(value)}
               style={ pickerSelectStyles }
@@ -66,23 +66,28 @@ export const Converter = () => {
           />
         </View>
       </View>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         <View style={ styles.resultContainer } >
-          { result ? <Text>This is:</Text> : null }
           <Text style={ styles.resultText }>{ fahrenheit }°F</Text>
         </View>
         <View style={ styles.resultContainer } >
-          { result ? <Text>This is:</Text> : null }
           <Text style={ styles.resultText }>{ celsius }°C</Text>
         </View>
         <View style={ styles.resultContainer } >
-          { result ? <Text>This is:</Text> : null }
           <Text style={ styles.resultText }>{ kelvin }K</Text>
         </View>
       </View>
       <Pressable
         onPress={ getResult }
-        style={ styles.button }>
+        style={({ pressed }) => [
+          {
+            opacity: pressed ?
+              0.6
+              :
+              1.0
+          },
+          styles.button
+        ] }>
         <ButtonComp name="Convert" />
       </Pressable>
     </View>
@@ -101,19 +106,22 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: 18,
     paddingTop: 10,
-    paddingBottom: 5
+    paddingBottom: 5,
+    color: colors.white
   },
   resultContainer: {
     borderBottomWidth: 1,
-    borderBottomColor: 'gray',
-    width: '33%',
+    borderBottomColor: colors.white,
+    width: '30%',
     alignSelf: 'center',
     alignItems: 'center',
-    marginVertical: 20
+    marginVertical: 20,
+    marginHorizontal: 2
   },
   resultText: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: colors.white
   },
   kelvinContainer: {
     width: '50%',
@@ -121,7 +129,11 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   kelvinText: {
-    textAlign: 'center'
+    textAlign: 'center',
+    color: colors.white
+  },
+  label: {
+    color: colors.white
   }
 })
 
@@ -134,16 +146,20 @@ const pickerSelectStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderRadius: 4,
     color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
-    marginRight: 30
+    paddingRight: 30,
+    marginRight: 30,
+    color: colors.white
   },
   inputAndroid: {
     fontSize: 18,
-    paddingBottom: 10,
+    paddingVertical: 7.5,
+    paddingLeft: 5,
     borderColor: 'gray',
     borderBottomWidth: 1,
     borderRadius: 4,
     color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
+    paddingRight: 30,
+    marginRight: 30,
+    color: colors.white
   },
 });
