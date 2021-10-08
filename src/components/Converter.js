@@ -35,10 +35,20 @@ export const Converter = () => {
       let finalCel = celNum.toFixed(1)
       setCelsius(finalCel);
       let kelNum = parseFloat(celNum) + 273.15
-      let finalKel = kelNum.toFixed(2)
+      let finalKel = kelNum.toFixed(1)
       setKelvin(finalKel)
+    } else if (unit === 'Kelvin') {
+      setKelvin(degrees)
+      let fahrNum = (degrees - 273.15) * 9/5 + 32
+      let finalFahr = fahrNum.toFixed(1)
+      setFahrenheit(finalFahr)
+      let celNum = degrees - 273.15
+      let finalCel = celNum.toFixed(1)
+      setCelsius(finalCel)
     }
   }
+
+  console.log(fahrenheit, celsius, kelvin)
   
   return (
     <View>
@@ -62,6 +72,7 @@ export const Converter = () => {
               items={[
                   { label: 'Celsius', value: 'Celsius' },
                   { label: 'Fahrenheit', value: 'Fahrenheit' },
+                  { label: 'Kelvin', value: 'Kelvin' },
               ]}
           />
         </View>
@@ -74,7 +85,7 @@ export const Converter = () => {
           <Text style={ styles.resultText }>{ celsius }°C</Text>
         </View>
         <View style={ styles.resultContainer } >
-          <Text style={ styles.resultText }>{ kelvin }K</Text>
+          <Text style={ styles.resultText }>{ kelvin } K</Text>
         </View>
       </View>
       <Pressable
@@ -85,8 +96,7 @@ export const Converter = () => {
               0.6
               :
               1.0
-          },
-          styles.button
+          }
         ] }>
         <ButtonComp name="Convert" />
       </Pressable>

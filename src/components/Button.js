@@ -14,7 +14,16 @@ const styles = StyleSheet.create({
         width: '40%',
         alignSelf: 'center',
         backgroundColor: colors.neonGreen,
-        color: colors.black
+        color: colors.black,
+        shadowColor: colors.neonGreen,
+        shadowOffset: {
+          width: 0,
+          height: 9,
+        },
+        shadowOpacity: 0.48,
+        shadowRadius: 11.95,
+
+        elevation: 18,
     },
     buttonText: {
       color: colors.black,
